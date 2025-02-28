@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { AlertCircle, KeyRound, Mail, ArrowRight, Loader2 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { createClient } from '@supabase/supabase-js';
+import { RenewlyticsLogo } from '@/components/branding/RenewlyticsLogo';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -16,9 +17,9 @@ const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
 
-  // Initialize Supabase client - In a real app, use environment variables
-  const supabaseUrl = 'YOUR_SUPABASE_URL';
-  const supabaseKey = 'YOUR_SUPABASE_KEY';
+  // Initialize Supabase client with project ID
+  const supabaseUrl = 'https://guqqljsjqxhxdklufgyg.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1cXFsanNqcXhoeGRrbHVmZ3lnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNTA1OTAsImV4cCI6MjAyMjgyNjU5MH0.OdYDnFbZ6D9ZMm-oMPtK1eA1LqvXYIg7LCKhk7m-lDc';
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   const handleAuth = async (e: React.FormEvent) => {
@@ -80,10 +81,7 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-tr from-renewal-600 to-renewal-400 text-white text-3xl font-bold mb-4">
-            R
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Renewlytics</h1>
+          <RenewlyticsLogo size="lg" className="mx-auto mb-4" />
           <p className="text-slate-600 dark:text-slate-400 mt-2">
             AI-powered customer retention platform
           </p>
