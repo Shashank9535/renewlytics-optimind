@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import Analytics from "./pages/Analytics";
 import Segments from "./pages/Segments";
 import Predictions from "./pages/Predictions";
+import Import from "./pages/Import";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +25,8 @@ const App = () => (
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/segments" element={<Segments />} />
           <Route path="/predictions" element={<Predictions />} />
+          <Route path="/import" element={<Import />} />
+          <Route path="/auth" element={<Auth />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
