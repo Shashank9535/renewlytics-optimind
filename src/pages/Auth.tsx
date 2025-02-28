@@ -81,8 +81,8 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <RenewlyticsLogo size="lg" className="mx-auto mb-4" />
-          <p className="text-slate-600 dark:text-slate-400 mt-2">
+          <RenewlyticsLogo variant="with-tagline" size="lg" className="mx-auto mb-2" />
+          <p className="text-slate-600 dark:text-slate-400 mt-3">
             AI-powered customer retention platform
           </p>
         </div>
