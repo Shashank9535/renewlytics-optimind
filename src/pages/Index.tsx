@@ -1,13 +1,214 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { StatCard } from '@/components/dashboard/StatCard';
+import { ChurnRiskChart } from '@/components/dashboard/ChurnRiskChart';
+import { CircularProgress } from '@/components/dashboard/CircularProgress';
+import { CustomerRetentionChart } from '@/components/dashboard/CustomerRetentionChart';
+import { SegmentDistributionChart } from '@/components/dashboard/SegmentDistributionChart';
+import { AtRiskCustomersTable } from '@/components/dashboard/AtRiskCustomersTable';
+import { UploadCsvCard } from '@/components/dashboard/UploadCsvCard';
+import { ActionableInsightsCard } from '@/components/dashboard/ActionableInsightsCard';
+import { BadgeCheck, Users, AlertTriangle, Zap } from 'lucide-react';
 
 const Index = () => {
+  // Sample data for charts and tables
+  const churnRiskData = [
+    { name: 'High Risk', value: 15, color: '#f43f5e' },
+    { name: 'Medium Risk', value: 30, color: '#f59e0b' },
+    { name: 'Low Risk', value: 55, color: '#10b981' },
+  ];
+
+  const retentionData = [
+    { date: '2023-05-01', value: 97 },
+    { date: '2023-05-08', value: 96 },
+    { date: '2023-05-15', value: 95 },
+    { date: '2023-05-22', value: 93 },
+    { date: '2023-05-29', value: 94 },
+    { date: '2023-06-05', value: 92 },
+    { date: '2023-06-12', value: 90 },
+    { date: '2023-06-19', value: 91 },
+    { date: '2023-06-26', value: 89 },
+    { date: '2023-07-03', value: 90 },
+  ];
+
+  const segmentData = [
+    { name: 'Active', value: 450, color: '#10b981' },
+    { name: 'At Risk', value: 120, color: '#f59e0b' },
+    { name: 'Churned', value: 85, color: '#f43f5e' },
+    { name: 'New Users', value: 165, color: '#0ea5e9' },
+  ];
+
+  const atRiskCustomers = [
+    {
+      id: '1',
+      name: 'Jane Cooper',
+      email: 'jane@example.com',
+      churnRisk: 'high',
+      churnReason: 'Payment failures, low usage',
+      lastActive: '2 days ago',
+    },
+    {
+      id: '2',
+      name: 'Alex Morgan',
+      email: 'alex@example.com',
+      churnRisk: 'high',
+      churnReason: 'Feature complaints, support tickets',
+      lastActive: '4 days ago',
+    },
+    {
+      id: '3',
+      name: 'Michael Johnson',
+      email: 'michael@example.com',
+      churnRisk: 'medium',
+      churnReason: 'Decreasing usage, missed payments',
+      lastActive: '1 day ago',
+    },
+    {
+      id: '4',
+      name: 'Emily Davis',
+      email: 'emily@example.com',
+      churnRisk: 'medium',
+      churnReason: 'Engagement drop, negative feedback',
+      lastActive: '3 days ago',
+    },
+    {
+      id: '5',
+      name: 'Robert Wilson',
+      email: 'robert@example.com',
+      churnRisk: 'low',
+      churnReason: 'Slight engagement drop',
+      lastActive: 'Today',
+    },
+  ];
+
+  const insights = [
+    {
+      id: '1',
+      title: 'Payment Failure Patterns Detected',
+      description: 'Users with payment failures have a 68% higher churn rate. Consider implementing pre-dunning notifications.',
+      priority: 'high',
+      action: 'Setup Payment Reminders',
+    },
+    {
+      id: '2',
+      title: 'Feature Adoption Gap Identified',
+      description: 'Customers aren\'t using key features that increase retention. Implement onboarding improvements.',
+      priority: 'medium',
+      action: 'Launch Feature Tutorials',
+    },
+    {
+      id: '3',
+      title: 'Pricing Tier Optimization',
+      description: 'Mid-tier plan shows highest retention. Consider adjusting features in lower tier plans.',
+      priority: 'low',
+      action: 'View Pricing Analysis',
+    },
+  ];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <DashboardLayout>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <p className="text-slate-600 dark:text-slate-400">
+          Overview of your customer retention metrics and insights
+        </p>
       </div>
-    </div>
+
+      {/* Stats overview */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 animate-fade-up" style={{ animationDelay: '100ms' }}>
+        <StatCard
+          title="Total Customers"
+          value="820"
+          icon={Users}
+          trend={5.2}
+          trendLabel="vs last month"
+        />
+        <StatCard
+          title="Retention Rate"
+          value="89%"
+          icon={BadgeCheck}
+          trend={-2.1}
+          trendLabel="vs last month"
+          valueClassName="text-renewal-600 dark:text-renewal-500"
+        >
+          <CustomerRetentionChart 
+            data={retentionData.slice(-5)} 
+            className="h-16 mt-2" 
+          />
+        </StatCard>
+        <StatCard
+          title="At-Risk Customers"
+          value="45"
+          icon={AlertTriangle}
+          trend={12.8}
+          trendLabel="vs last month"
+          valueClassName="text-amber-600 dark:text-amber-500"
+        />
+        <StatCard
+          title="Churn Rate"
+          value="3.2%"
+          icon={Zap}
+          trend={-0.8}
+          trendLabel="vs last month"
+          valueClassName="text-emerald-600 dark:text-emerald-500"
+        />
+      </div>
+
+      {/* Main content */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-up" style={{ animationDelay: '200ms' }}>
+        {/* First column */}
+        <div className="space-y-6">
+          <div className="rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 p-6">
+            <h3 className="font-medium mb-4">Churn Risk Distribution</h3>
+            <ChurnRiskChart data={churnRiskData} />
+            <div className="grid grid-cols-3 gap-2 mt-4">
+              {churnRiskData.map((item) => (
+                <div key={item.name} className="text-center">
+                  <div 
+                    className="w-3 h-3 rounded-full mx-auto mb-1"
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <p className="text-xs text-slate-600 dark:text-slate-400">{item.name}</p>
+                  <p className="text-sm font-medium">{item.value}%</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <UploadCsvCard />
+        </div>
+
+        {/* Second column */}
+        <div className="space-y-6">
+          <div className="rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 p-6">
+            <h3 className="font-medium mb-4">Customer Retention Trend</h3>
+            <CustomerRetentionChart data={retentionData} />
+          </div>
+          <div className="rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 p-6">
+            <h3 className="font-medium mb-4">Customer Segments</h3>
+            <SegmentDistributionChart data={segmentData} />
+          </div>
+        </div>
+
+        {/* Third column */}
+        <div className="space-y-6">
+          <div className="rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 p-6 text-center">
+            <h3 className="font-medium mb-4">Prediction Accuracy</h3>
+            <div className="flex justify-center mb-4">
+              <CircularProgress value={92} label="Accuracy" />
+            </div>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              Based on historical churn predictions vs. actual results
+            </p>
+          </div>
+          <ActionableInsightsCard insights={insights} />
+        </div>
+      </div>
+
+      {/* At-risk customers table */}
+      <div className="mt-6 animate-fade-up" style={{ animationDelay: '300ms' }}>
+        <AtRiskCustomersTable customers={atRiskCustomers} />
+      </div>
+    </DashboardLayout>
   );
 };
 
