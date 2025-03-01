@@ -11,6 +11,8 @@ import Predictions from "./pages/Predictions";
 import Import from "./pages/Import";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import Automations from "./pages/Automations";
+import Integrations from "./pages/Integrations";
 
 const queryClient = new QueryClient();
 
@@ -22,10 +24,13 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/dashboard" element={<Index />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/segments" element={<Segments />} />
           <Route path="/predictions" element={<Predictions />} />
           <Route path="/import" element={<Import />} />
+          <Route path="/automations" element={<Automations />} />
+          <Route path="/integrations" element={<Integrations />} />
           <Route path="/auth" element={<Auth />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

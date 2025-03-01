@@ -3,7 +3,7 @@ import { Lightbulb, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-interface Insight {
+export interface Insight {
   id: string;
   title: string;
   description: string;
