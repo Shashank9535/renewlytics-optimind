@@ -7,7 +7,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
-import { FilterX, RefreshCw, Calendar, TrendingDown, TrendingUp, Brain, InfoIcon, LineChart as LineChartIcon, PieChart } from 'lucide-react';
+import { FilterX, RefreshCw, Calendar, TrendingDown, TrendingUp, Brain, InfoIcon, LineChart as LineChartIcon, PieChart, Loader2 } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
 import { ActionableInsightsCard } from '@/components/dashboard/ActionableInsightsCard';
@@ -144,21 +144,21 @@ const Predictions = () => {
       id: "1",
       title: "Offer discounts to at-risk enterprise customers",
       description: "15 enterprise customers are showing early churn signals based on decreased feature usage.",
-      priority: "high",
+      priority: "high" as "high",
       action: "Create Targeted Campaign"
     },
     {
       id: "2",
       title: "Improve onboarding for new mobile app users",
       description: "Mobile app users are 3.2x more likely to churn in the first 30 days due to incomplete onboarding.",
-      priority: "medium",
+      priority: "medium" as "medium",
       action: "Review Onboarding Flow"
     },
     {
       id: "3",
       title: "Schedule QBRs with customers approaching renewal",
       description: "64 customers have renewal dates within the next 45 days with no scheduled reviews.",
-      priority: "medium",
+      priority: "medium" as "medium",
       action: "Plan QBR Schedule"
     }
   ];
