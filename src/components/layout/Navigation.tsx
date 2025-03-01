@@ -1,150 +1,179 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { 
-  BarChart3, 
-  Users, 
-  Settings,
-  Upload,
+import { useMobile } from '@/hooks/use-mobile';
+import { RenewlyticsLogo } from '@/components/branding/RenewlyticsLogo';
+import {
+  LayoutDashboard,
+  BarChart2,
+  Pipette,
+  Users,
+  FileText,
   Menu,
   X,
-  Home,
-  LineChart
+  ArrowUpRight,
+  Upload,
+  GitMerge,
+  Zap,
+  Brain
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-interface NavItemProps {
-  icon: React.ElementType;
-  label: string;
-  to: string;
-  isActive: boolean;
-}
-
-const NavItem = ({ icon: Icon, label, to, isActive }: NavItemProps) => {
-  return (
-    <Link 
-      to={to} 
-      className={cn(
-        "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group",
-        isActive 
-          ? "bg-renewal-500/10 text-renewal-700 dark:text-renewal-300" 
-          : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800/40"
-      )}
-    >
-      <Icon className={cn(
-        "w-5 h-5 transition-colors",
-        isActive 
-          ? "text-renewal-600 dark:text-renewal-400" 
-          : "text-slate-500 group-hover:text-slate-700 dark:text-slate-400 dark:group-hover:text-slate-200"
-      )} />
-      <span className="font-medium">{label}</span>
-    </Link>
-  );
+type Link = {
+  name: string;
+  href: string;
+  icon: JSX.Element;
+  badge?: 'new' | 'beta' | 'ai';
 };
 
 export function Navigation() {
   const location = useLocation();
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useMobile();
 
-  const navItems = [
-    { icon: Home, label: 'Overview', to: '/' },
-    { icon: BarChart3, label: 'Analytics', to: '/analytics' },
-    { icon: Users, label: 'Segments', to: '/segments' },
-    { icon: LineChart, label: 'Predictions', to: '/predictions' },
-    { icon: Upload, label: 'Import Data', to: '/import' },
-    { icon: Settings, label: 'Settings', to: '/settings' },
+  const links: Link[] = [
+    {
+      name: 'Dashboard',
+      href: '/dashboard',
+      icon: <LayoutDashboard className="h-5 w-5" />,
+    },
+    {
+      name: 'Analytics',
+      href: '/analytics',
+      icon: <BarChart2 className="h-5 w-5" />,
+    },
+    {
+      name: 'Predictions',
+      href: '/predictions',
+      icon: <Brain className="h-5 w-5" />,
+      badge: 'ai',
+    },
+    {
+      name: 'Segments',
+      href: '/segments',
+      icon: <Pipette className="h-5 w-5" />,
+    },
+    {
+      name: 'Automations',
+      href: '/automations',
+      icon: <Zap className="h-5 w-5" />,
+      badge: 'new',
+    },
+    {
+      name: 'Integrations',
+      href: '/integrations',
+      icon: <GitMerge className="h-5 w-5" />,
+      badge: 'new',
+    },
+    {
+      name: 'Import',
+      href: '/import',
+      icon: <Upload className="h-5 w-5" />,
+    },
   ];
+
+  const getLinkClassName = (href: string) => {
+    const isActive = location.pathname === href;
+    return cn(
+      'group flex items-center gap-3 rounded-md px-3 py-2 transition-colors text-sm font-medium',
+      isActive
+        ? 'bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-50'
+        : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-50'
+    );
+  };
+
+  const navLinks = links.map((link) => (
+    <Link
+      key={link.name}
+      to={link.href}
+      className={getLinkClassName(link.href)}
+      onClick={() => setIsOpen(false)}
+    >
+      {link.icon}
+      <span>{link.name}</span>
+      {link.badge && (
+        <span 
+          className={cn(
+            "ml-auto rounded-full px-2 py-0.5 text-xs font-medium leading-none",
+            link.badge === 'new' 
+              ? "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300" 
+              : link.badge === 'ai'
+                ? "bg-violet-100 text-violet-700 dark:bg-violet-900/50 dark:text-violet-300"
+                : "bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300"
+          )}
+        >
+          {link.badge === 'ai' ? 'AI' : link.badge.toUpperCase()}
+        </span>
+      )}
+    </Link>
+  ));
 
   return (
     <>
-      {/* Mobile Nav Toggle */}
-      <div className="md:hidden fixed top-4 left-4 z-50">
-        <Button 
-          variant="outline" 
-          size="icon" 
-          onClick={() => setMobileNavOpen(!mobileNavOpen)}
-          className="bg-white/80 backdrop-blur-sm dark:bg-slate-900/80 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800"
-        >
-          {mobileNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
+      {isMobile && (
+        <div className="flex justify-between items-center px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+          <Link to="/" className="flex items-center gap-2">
+            <RenewlyticsLogo className="h-8 w-8" />
+            <span className="font-semibold text-slate-900 dark:text-white">
+              Renewlytics
+            </span>
+          </Link>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle navigation"
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+        </div>
+      )}
+      <div
+        className={cn(
+          'fixed inset-0 z-50 flex flex-col bg-white dark:bg-slate-950 transition-transform lg:static lg:z-auto lg:translate-x-0 lg:border-r lg:border-slate-200 dark:lg:border-slate-800 lg:w-64',
+          isMobile && !isOpen && '-translate-x-full',
+          isMobile && 'pt-0',
+          !isMobile && 'pt-6'
+        )}
+      >
+        {!isMobile && (
+          <div className="flex items-center gap-2 px-4 py-2 mb-4">
+            <Link to="/" className="flex items-center gap-2">
+              <RenewlyticsLogo className="h-8 w-8" />
+              <span className="font-semibold text-slate-900 dark:text-white">
+                Renewlytics
+              </span>
+            </Link>
+          </div>
+        )}
+        <div className="flex-1 overflow-auto p-4">
+          <div className="space-y-1">{navLinks}</div>
+          <div className="mt-8">
+            <h4 className="px-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+              Resources
+            </h4>
+            <div className="mt-2 space-y-1">
+              <button className="w-full group flex items-center gap-3 rounded-md px-3 py-2 transition-colors text-sm font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-50">
+                <FileText className="h-5 w-5" />
+                <span>Documentation</span>
+                <ArrowUpRight className="ml-auto h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </button>
+              <button className="w-full group flex items-center gap-3 rounded-md px-3 py-2 transition-colors text-sm font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-50">
+                <Users className="h-5 w-5" />
+                <span>Community</span>
+                <ArrowUpRight className="ml-auto h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-
-      {/* Mobile Navigation */}
-      <div className={cn(
-        "fixed inset-0 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm z-40 transform transition-transform duration-300 md:hidden",
-        mobileNavOpen ? "translate-x-0" : "-translate-x-full"
-      )}>
-        <div className="p-6 pt-20 h-full flex flex-col">
-          <div className="flex items-center gap-3 mb-8 px-4">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-renewal-600 to-renewal-400 flex items-center justify-center text-white font-bold text-xl">
-              R
-            </div>
-            <h1 className="text-xl font-bold">Renewlytics</h1>
-          </div>
-
-          <nav className="flex-1 space-y-1">
-            {navItems.map((item) => (
-              <NavItem 
-                key={item.to}
-                icon={item.icon}
-                label={item.label}
-                to={item.to}
-                isActive={location.pathname === item.to}
-              />
-            ))}
-          </nav>
-
-          <div className="border-t border-slate-200 dark:border-slate-800 pt-4 mt-4">
-            <div className="flex items-center gap-3 px-4 py-2">
-              <Avatar className="h-9 w-9 border border-slate-200 dark:border-slate-700">
-                <AvatarImage src="" />
-                <AvatarFallback className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">JS</AvatarFallback>
-              </Avatar>
-              <div>
-                <div className="font-medium text-sm">John Smith</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400">admin@company.com</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Desktop Navigation */}
-      <aside className="hidden md:flex h-screen w-64 flex-col fixed left-0 top-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
-        <div className="flex items-center gap-3 p-6 border-b border-slate-200 dark:border-slate-800">
-          <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-renewal-600 to-renewal-400 flex items-center justify-center text-white font-bold text-xl">
-            R
-          </div>
-          <h1 className="text-xl font-bold animate-fade-in">Renewlytics</h1>
-        </div>
-
-        <nav className="flex-1 py-6 px-3 space-y-1">
-          {navItems.map((item) => (
-            <NavItem 
-              key={item.to}
-              icon={item.icon}
-              label={item.label}
-              to={item.to}
-              isActive={location.pathname === item.to}
-            />
-          ))}
-        </nav>
-
-        <div className="p-4 border-t border-slate-200 dark:border-slate-800">
-          <div className="flex items-center gap-3">
-            <Avatar className="h-9 w-9 border border-slate-200 dark:border-slate-700">
-              <AvatarImage src="" />
-              <AvatarFallback className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">JS</AvatarFallback>
-            </Avatar>
-            <div>
-              <div className="font-medium text-sm">John Smith</div>
-              <div className="text-xs text-slate-500 dark:text-slate-400">admin@company.com</div>
-            </div>
-          </div>
-        </div>
-      </aside>
+      {isOpen && isMobile && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
     </>
   );
 }
