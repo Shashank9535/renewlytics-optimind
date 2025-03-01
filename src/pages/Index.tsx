@@ -8,7 +8,7 @@ import { SegmentDistributionChart } from '@/components/dashboard/SegmentDistribu
 import { AtRiskCustomersTable } from '@/components/dashboard/AtRiskCustomersTable';
 import { UploadCsvCard } from '@/components/dashboard/UploadCsvCard';
 import { ActionableInsightsCard } from '@/components/dashboard/ActionableInsightsCard';
-import { BadgeCheck, Users, AlertTriangle, Zap } from 'lucide-react';
+import { BadgeCheck, Users, AlertTriangle, Zap, Brain, Target, Activity } from 'lucide-react';
 
 const Index = () => {
   // Sample data for charts and tables
@@ -107,21 +107,22 @@ const Index = () => {
 
   return (
     <DashboardLayout>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <p className="text-slate-600 dark:text-slate-400">
-          Overview of your customer retention metrics and insights
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-renewal-700 to-renewal-500 text-transparent bg-clip-text">Dashboard</h1>
+        <p className="text-slate-600 dark:text-slate-400 mt-2">
+          Overview of your customer retention metrics and AI-powered insights
         </p>
       </div>
 
       {/* Stats overview */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 animate-fade-up" style={{ animationDelay: '100ms' }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-up" style={{ animationDelay: '100ms' }}>
         <StatCard
           title="Total Customers"
           value="820"
           icon={Users}
           trend={5.2}
           trendLabel="vs last month"
+          className="glass-card hover:shadow-xl transition-all transform hover:-translate-y-1"
         />
         <StatCard
           title="Retention Rate"
@@ -130,6 +131,7 @@ const Index = () => {
           trend={-2.1}
           trendLabel="vs last month"
           valueClassName="text-renewal-600 dark:text-renewal-500"
+          className="glass-card hover:shadow-xl transition-all transform hover:-translate-y-1"
         >
           <CustomerRetentionChart 
             data={retentionData.slice(-5)} 
@@ -143,6 +145,7 @@ const Index = () => {
           trend={12.8}
           trendLabel="vs last month"
           valueClassName="text-amber-600 dark:text-amber-500"
+          className="glass-card hover:shadow-xl transition-all transform hover:-translate-y-1"
         />
         <StatCard
           title="Churn Rate"
@@ -151,19 +154,23 @@ const Index = () => {
           trend={-0.8}
           trendLabel="vs last month"
           valueClassName="text-emerald-600 dark:text-emerald-500"
+          className="glass-card hover:shadow-xl transition-all transform hover:-translate-y-1"
         />
       </div>
 
       {/* Main content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-up" style={{ animationDelay: '200ms' }}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-up" style={{ animationDelay: '200ms' }}>
         {/* First column */}
-        <div className="space-y-6">
-          <div className="rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 p-6">
-            <h3 className="font-medium mb-4">Churn Risk Distribution</h3>
+        <div className="space-y-8">
+          <div className="rounded-xl bg-white dark:bg-slate-900/80 shadow-lg border border-slate-100/50 dark:border-slate-800/50 p-6 backdrop-blur-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <Activity className="h-5 w-5 text-renewal-500" />
+              <h3 className="font-medium">Churn Risk Distribution</h3>
+            </div>
             <ChurnRiskChart data={churnRiskData} />
-            <div className="grid grid-cols-3 gap-2 mt-4">
+            <div className="grid grid-cols-3 gap-2 mt-6">
               {churnRiskData.map((item) => (
-                <div key={item.name} className="text-center">
+                <div key={item.name} className="text-center p-2 rounded-lg bg-slate-50 dark:bg-slate-800/50">
                   <div 
                     className="w-3 h-3 rounded-full mx-auto mb-1"
                     style={{ backgroundColor: item.color }}
@@ -174,39 +181,54 @@ const Index = () => {
               ))}
             </div>
           </div>
-          <UploadCsvCard />
+          <UploadCsvCard className="transform transition-all hover:shadow-xl hover:-translate-y-1" />
         </div>
 
         {/* Second column */}
-        <div className="space-y-6">
-          <div className="rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 p-6">
-            <h3 className="font-medium mb-4">Customer Retention Trend</h3>
+        <div className="space-y-8">
+          <div className="rounded-xl bg-white dark:bg-slate-900/80 shadow-lg border border-slate-100/50 dark:border-slate-800/50 p-6 backdrop-blur-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <Target className="h-5 w-5 text-renewal-500" />
+              <h3 className="font-medium">Customer Retention Trend</h3>
+            </div>
             <CustomerRetentionChart data={retentionData} />
           </div>
-          <div className="rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 p-6">
-            <h3 className="font-medium mb-4">Customer Segments</h3>
+          <div className="rounded-xl bg-white dark:bg-slate-900/80 shadow-lg border border-slate-100/50 dark:border-slate-800/50 p-6 backdrop-blur-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <Users className="h-5 w-5 text-renewal-500" />
+              <h3 className="font-medium">Customer Segments</h3>
+            </div>
             <SegmentDistributionChart data={segmentData} />
           </div>
         </div>
 
         {/* Third column */}
-        <div className="space-y-6">
-          <div className="rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 p-6 text-center">
-            <h3 className="font-medium mb-4">Prediction Accuracy</h3>
+        <div className="space-y-8">
+          <div className="rounded-xl bg-white dark:bg-slate-900/80 shadow-lg border border-slate-100/50 dark:border-slate-800/50 p-6 text-center backdrop-blur-sm">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Brain className="h-5 w-5 text-renewal-500" />
+              <h3 className="font-medium">Prediction Accuracy</h3>
+            </div>
             <div className="flex justify-center mb-4">
-              <CircularProgress value={92} label="Accuracy" />
+              <CircularProgress 
+                value={92} 
+                label="Accuracy" 
+                color="stroke-renewal-500" 
+                size={140} 
+                className="transform transition-all hover:scale-105"
+              />
             </div>
             <p className="text-sm text-slate-600 dark:text-slate-400">
               Based on historical churn predictions vs. actual results
             </p>
           </div>
-          <ActionableInsightsCard insights={insights} />
+          <ActionableInsightsCard insights={insights} className="transform transition-all hover:shadow-xl hover:-translate-y-1" />
         </div>
       </div>
 
       {/* At-risk customers table */}
-      <div className="mt-6 animate-fade-up" style={{ animationDelay: '300ms' }}>
-        <AtRiskCustomersTable customers={atRiskCustomers} />
+      <div className="mt-8 animate-fade-up" style={{ animationDelay: '300ms' }}>
+        <AtRiskCustomersTable customers={atRiskCustomers} className="backdrop-blur-sm" />
       </div>
     </DashboardLayout>
   );
