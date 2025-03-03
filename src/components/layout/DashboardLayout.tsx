@@ -24,9 +24,14 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex">
       <Navigation />
       <main className="flex-1 md:ml-64 min-h-screen flex flex-col">
-        <div className="flex justify-end p-4 border-b border-slate-100 dark:border-slate-800">
-          <ThemeSettingsButton />
-        </div>
+        <header className="flex justify-between items-center p-4 border-b border-slate-100 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm sticky top-0 z-10">
+          <div className="flex items-center">
+            {/* This is where we could add page heading or breadcrumbs */}
+          </div>
+          <div className="flex items-center gap-2">
+            <ThemeSettingsButton />
+          </div>
+        </header>
         <div className={cn(
           "flex-1 animate-fade-in",
           contentPadding[layoutDensity]
