@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { TrendingUp, Zap, Brain } from 'lucide-react';
+import { Brain } from 'lucide-react';
 
 interface IconElementProps {
   size: 'sm' | 'md' | 'lg';
@@ -31,23 +31,13 @@ export const IconElement: React.FC<IconElementProps> = ({
         animated && "transition-transform hover:scale-110 duration-300"
       )}
     >
-      <div className="absolute inset-0 rounded-full bg-white/5 backdrop-blur-[1px]"></div>
-      <div className="relative flex items-center justify-center">
-        <Brain 
-          className={cn(
-            "text-white/80 absolute",
-            size === 'sm' ? 'h-4 w-4' : size === 'md' ? 'h-5 w-5' : 'h-7 w-7',
-            animated && "animate-bounce-slow"
-          )} 
-        />
-        <TrendingUp 
-          className={cn(
-            "text-white",
-            size === 'sm' ? 'h-3 w-3' : size === 'md' ? 'h-4 w-4' : 'h-6 w-6',
-            animated && "animate-fade-in"
-          )} 
-        />
-      </div>
+      <Brain 
+        className={cn(
+          "text-white",
+          size === 'sm' ? 'h-4 w-4' : size === 'md' ? 'h-5 w-5' : 'h-7 w-7',
+          animated && "animate-pulse"
+        )} 
+      />
     </div>
   );
 };

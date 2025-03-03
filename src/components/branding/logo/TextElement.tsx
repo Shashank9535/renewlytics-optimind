@@ -10,7 +10,7 @@ export const TextElement: React.FC<TextElementProps> = ({ size }) => {
   return (
     <span 
       className={cn(
-        "font-bold tracking-tight bg-gradient-to-r from-renewal-700 to-renewal-500 text-transparent bg-clip-text transition-all hover:from-renewal-600 hover:to-renewal-400",
+        "font-bold tracking-tight bg-gradient-to-r from-renewal-700 to-renewal-500 text-transparent bg-clip-text transition-all duration-300",
         size === 'sm' ? 'text-sm' : size === 'md' ? 'text-lg' : 'text-2xl'
       )}
     >
