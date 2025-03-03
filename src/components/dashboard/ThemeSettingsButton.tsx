@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Settings } from 'lucide-react';
+import { Settings as SettingsIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -18,7 +18,7 @@ export function ThemeSettingsButton() {
             className="h-9 w-9 rounded-full transition-all hover:bg-slate-100 dark:hover:bg-slate-800" 
             onClick={() => setIsSettingsOpen(true)}
           >
-            <Settings className="h-4 w-4" />
+            <SettingsIcon className="h-4 w-4" />
           </Button>
         </TooltipTrigger>
         <TooltipContent>

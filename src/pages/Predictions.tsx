@@ -1,4 +1,3 @@
-
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -11,6 +10,9 @@ import { FilterX, RefreshCw, Calendar, TrendingDown, TrendingUp, Brain, InfoIcon
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
 import { ActionableInsightsCard } from '@/components/dashboard/ActionableInsightsCard';
+import { SelfLearningAI } from '@/components/ai/SelfLearningAI';
+import { TrackingSDK } from '@/components/sdk/TrackingSDK';
+import { SecurityCompliance } from '@/components/security/SecurityCompliance';
 
 const Predictions = () => {
   const [timeFrame, setTimeFrame] = useState('30');
@@ -182,6 +184,10 @@ const Predictions = () => {
         <p className="text-slate-600 dark:text-slate-400">
           Forward-looking analysis based on our machine learning models
         </p>
+      </div>
+
+      <div className="mb-6 animate-fade-up">
+        <SelfLearningAI />
       </div>
 
       <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 animate-fade-up">
@@ -511,7 +517,11 @@ const Predictions = () => {
         </div>
       </div>
 
-      <div className="rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 animate-fade-up" style={{ animationDelay: '300ms' }}>
+      <div className="mb-6 animate-fade-up" style={{ animationDelay: '300ms' }}>
+        <TrackingSDK />
+      </div>
+
+      <div className="rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 animate-fade-up" style={{ animationDelay: '400ms' }}>
         <div className="p-6 border-b border-slate-100 dark:border-slate-800">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-medium">Customer Segment Forecast</h3>
@@ -563,6 +573,10 @@ const Predictions = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="mt-6 animate-fade-up" style={{ animationDelay: '500ms' }}>
+        <SecurityCompliance />
       </div>
     </DashboardLayout>
   );
