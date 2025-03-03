@@ -26,7 +26,7 @@ export const RenewlyticsLogo: React.FC<RenewlyticsLogoProps> = ({
   if (variant === 'with-tagline') {
     return (
       <div className={cn("flex flex-col items-center", className)}>
-        <div className="flex items-center gap-2 mb-1">
+        <div className="flex items-center gap-2">
           <IconElement size={size} animated={animated} variant={variant} />
           <TextElement size={size} />
         </div>
