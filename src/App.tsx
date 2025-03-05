@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import Automations from "./pages/Automations";
 import Integrations from "./pages/Integrations";
 
+// Create a QueryClient instance
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/automations" element={<Automations />} />
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/login" element={<Auth />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
