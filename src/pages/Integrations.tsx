@@ -109,52 +109,56 @@ const Integrations = () => {
 
   return (
     <DashboardLayout>
-      <div className="mb-6 animate-fade-in">
-        <h1 className="text-2xl font-bold">Integrations</h1>
-        <p className="text-slate-600 dark:text-slate-400">
-          Connect your CRM and payment systems to enhance Renewlytics capabilities
-        </p>
+      {/* Hero section with Gainsight-style gradient header */}
+      <div className="relative overflow-hidden rounded-xl mb-10 py-10 px-8 bg-gradient-to-r from-blue-700 via-purple-600 to-violet-600 text-white">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.gainsight.com/wp-content/themes/gainsight/assets/images/banner-bg-pattern.png')] bg-cover opacity-10"></div>
+        <div className="relative z-10">
+          <h1 className="text-3xl font-bold mb-2">Connect Your Tech Stack</h1>
+          <p className="text-xl opacity-90 max-w-2xl">
+            Seamlessly integrate with the tools you already use to enhance your customer retention strategy
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 animate-fade-up">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
         {/* CRM Integrations */}
-        <Card className="shadow-md hover:shadow-lg transition-shadow">
-          <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950/40 dark:to-blue-900/20 rounded-t-lg border-b border-blue-100 dark:border-blue-800">
+        <Card className="border-0 shadow-xl bg-white dark:bg-slate-900 overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950/40 dark:to-blue-900/20 pb-8 border-b border-blue-100 dark:border-blue-800">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center">
-                  <Users className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+              <div className="flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center shadow-md">
+                  <Users className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <CardTitle>CRM Integrations</CardTitle>
-                  <CardDescription>Connect your customer relationship management platforms</CardDescription>
+                  <CardTitle className="text-2xl">CRM Integrations</CardTitle>
+                  <CardDescription className="text-base mt-1">Connect your customer relationship management platforms</CardDescription>
                 </div>
               </div>
             </div>
           </CardHeader>
-          <CardContent className="pt-6">
+          <CardContent className="pt-8">
             <Tabs value={activeCrmTab} onValueChange={setActiveCrmTab}>
-              <TabsList className="grid grid-cols-3 mb-6">
-                <TabsTrigger value="salesforce">Salesforce</TabsTrigger>
-                <TabsTrigger value="hubspot">HubSpot</TabsTrigger>
-                <TabsTrigger value="zoho">Zoho</TabsTrigger>
+              <TabsList className="grid grid-cols-3 mb-8 w-full">
+                <TabsTrigger value="salesforce" className="py-3">Salesforce</TabsTrigger>
+                <TabsTrigger value="hubspot" className="py-3">HubSpot</TabsTrigger>
+                <TabsTrigger value="zoho" className="py-3">Zoho</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="salesforce" className="space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <div className="flex items-center gap-3">
+              <TabsContent value="salesforce" className="space-y-6">
+                <div className="flex items-center justify-between p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-all">
+                  <div className="flex items-center gap-4">
                     <img 
                       src="https://cdn.worldvectorlogo.com/logos/salesforce-2.svg" 
                       alt="Salesforce" 
-                      className="h-8 w-8 rounded bg-white p-1" 
+                      className="h-10 w-10 rounded bg-white p-1 shadow-sm" 
                     />
                     <div>
-                      <h3 className="font-medium">Salesforce</h3>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">Sync customer data and activities</p>
+                      <h3 className="font-medium text-lg">Salesforce</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Sync customer data and activities</p>
                     </div>
                   </div>
-                  <Badge variant="outline" className="bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                    <CheckCircle2 className="h-3 w-3 mr-1" />
+                  <Badge variant="outline" className="bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400 py-1.5 px-3">
+                    <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
                     Connected
                   </Badge>
                 </div>
@@ -164,46 +168,48 @@ const Integrations = () => {
                     variant="outline" 
                     onClick={() => handleTestIntegration("Salesforce")}
                     disabled={isLoading}
+                    className="py-6 text-base"
                   >
                     {isLoading ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                     ) : (
-                      <RefreshCw className="h-4 w-4 mr-2" />
+                      <RefreshCw className="h-5 w-5 mr-2" />
                     )}
                     Test Connection
                   </Button>
                   <Button 
                     variant="outline" 
                     onClick={() => handleDisconnect("Salesforce")}
-                    className="text-rose-600 border-rose-200 hover:bg-rose-50 dark:text-rose-400 dark:border-rose-900 dark:hover:bg-rose-950/50"
+                    className="py-6 text-base text-rose-600 border-rose-200 hover:bg-rose-50 dark:text-rose-400 dark:border-rose-900 dark:hover:bg-rose-950/50"
                   >
-                    <XCircle className="h-4 w-4 mr-2" />
+                    <XCircle className="h-5 w-5 mr-2" />
                     Disconnect
                   </Button>
                 </div>
               </TabsContent>
               
               <TabsContent value="hubspot" className="space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-all">
+                  <div className="flex items-center gap-4">
                     <img 
                       src="https://cdn.worldvectorlogo.com/logos/hubspot-1.svg" 
                       alt="HubSpot" 
-                      className="h-8 w-8 rounded bg-white p-1" 
+                      className="h-10 w-10 rounded bg-white p-1 shadow-sm" 
                     />
                     <div>
-                      <h3 className="font-medium">HubSpot</h3>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">Connect your marketing automation</p>
+                      <h3 className="font-medium text-lg">HubSpot</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Connect your marketing automation</p>
                     </div>
                   </div>
                   <Button 
                     onClick={() => handleConnectIntegration("crm", "HubSpot")}
                     disabled={isConnecting}
+                    className="py-6 px-6 text-base"
                   >
                     {isConnecting ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                     ) : (
-                      <PlusCircle className="h-4 w-4 mr-2" />
+                      <PlusCircle className="h-5 w-5 mr-2" />
                     )}
                     Connect
                   </Button>
@@ -211,26 +217,27 @@ const Integrations = () => {
               </TabsContent>
               
               <TabsContent value="zoho" className="space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-all">
+                  <div className="flex items-center gap-4">
                     <img 
                       src="https://cdn.worldvectorlogo.com/logos/zoho-2.svg" 
                       alt="Zoho" 
-                      className="h-8 w-8 rounded bg-white p-1" 
+                      className="h-10 w-10 rounded bg-white p-1 shadow-sm" 
                     />
                     <div>
-                      <h3 className="font-medium">Zoho CRM</h3>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">Integrate your Zoho customer data</p>
+                      <h3 className="font-medium text-lg">Zoho CRM</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Integrate your Zoho customer data</p>
                     </div>
                   </div>
                   <Button 
                     onClick={() => handleConnectIntegration("crm", "Zoho")}
                     disabled={isConnecting}
+                    className="py-6 px-6 text-base"
                   >
                     {isConnecting ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                     ) : (
-                      <PlusCircle className="h-4 w-4 mr-2" />
+                      <PlusCircle className="h-5 w-5 mr-2" />
                     )}
                     Connect
                   </Button>
@@ -241,43 +248,43 @@ const Integrations = () => {
         </Card>
 
         {/* Payment Integrations */}
-        <Card className="shadow-md hover:shadow-lg transition-shadow">
-          <CardHeader className="bg-gradient-to-r from-renewal-50 to-renewal-100 dark:from-renewal-950/40 dark:to-renewal-900/20 rounded-t-lg border-b border-renewal-100 dark:border-renewal-800">
+        <Card className="border-0 shadow-xl bg-white dark:bg-slate-900 overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-renewal-50 to-renewal-100 dark:from-renewal-950/40 dark:to-renewal-900/20 pb-8 border-b border-renewal-100 dark:border-renewal-800">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-renewal-100 dark:bg-renewal-900/50 flex items-center justify-center">
-                  <CreditCard className="h-5 w-5 text-renewal-600 dark:text-renewal-400" />
+              <div className="flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full bg-renewal-100 dark:bg-renewal-900/50 flex items-center justify-center shadow-md">
+                  <CreditCard className="h-6 w-6 text-renewal-600 dark:text-renewal-400" />
                 </div>
                 <div>
-                  <CardTitle>Payment Integrations</CardTitle>
-                  <CardDescription>Connect your billing and payment processors</CardDescription>
+                  <CardTitle className="text-2xl">Payment Integrations</CardTitle>
+                  <CardDescription className="text-base mt-1">Connect your billing and payment processors</CardDescription>
                 </div>
               </div>
             </div>
           </CardHeader>
-          <CardContent className="pt-6">
+          <CardContent className="pt-8">
             <Tabs value={activePaymentTab} onValueChange={setActivePaymentTab}>
-              <TabsList className="grid grid-cols-3 mb-6">
-                <TabsTrigger value="stripe">Stripe</TabsTrigger>
-                <TabsTrigger value="paypal">PayPal</TabsTrigger>
-                <TabsTrigger value="square">Square</TabsTrigger>
+              <TabsList className="grid grid-cols-3 mb-8 w-full">
+                <TabsTrigger value="stripe" className="py-3">Stripe</TabsTrigger>
+                <TabsTrigger value="paypal" className="py-3">PayPal</TabsTrigger>
+                <TabsTrigger value="square" className="py-3">Square</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="stripe" className="space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <div className="flex items-center gap-3">
+              <TabsContent value="stripe" className="space-y-6">
+                <div className="flex items-center justify-between p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-all">
+                  <div className="flex items-center gap-4">
                     <img 
                       src="https://cdn.worldvectorlogo.com/logos/stripe-4.svg" 
                       alt="Stripe" 
-                      className="h-8 w-8 rounded bg-white p-1" 
+                      className="h-10 w-10 rounded bg-white p-1 shadow-sm" 
                     />
                     <div>
-                      <h3 className="font-medium">Stripe</h3>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">Process payments and monitor subscriptions</p>
+                      <h3 className="font-medium text-lg">Stripe</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Process payments and monitor subscriptions</p>
                     </div>
                   </div>
-                  <Badge variant="outline" className="bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                    <CheckCircle2 className="h-3 w-3 mr-1" />
+                  <Badge variant="outline" className="bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400 py-1.5 px-3">
+                    <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
                     Connected
                   </Badge>
                 </div>
@@ -287,46 +294,48 @@ const Integrations = () => {
                     variant="outline" 
                     onClick={() => handleTestIntegration("Stripe")}
                     disabled={isLoading}
+                    className="py-6 text-base"
                   >
                     {isLoading ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                     ) : (
-                      <RefreshCw className="h-4 w-4 mr-2" />
+                      <RefreshCw className="h-5 w-5 mr-2" />
                     )}
                     Test Connection
                   </Button>
                   <Button 
                     variant="outline" 
                     onClick={() => handleDisconnect("Stripe")}
-                    className="text-rose-600 border-rose-200 hover:bg-rose-50 dark:text-rose-400 dark:border-rose-900 dark:hover:bg-rose-950/50"
+                    className="py-6 text-base text-rose-600 border-rose-200 hover:bg-rose-50 dark:text-rose-400 dark:border-rose-900 dark:hover:bg-rose-950/50"
                   >
-                    <XCircle className="h-4 w-4 mr-2" />
+                    <XCircle className="h-5 w-5 mr-2" />
                     Disconnect
                   </Button>
                 </div>
               </TabsContent>
               
               <TabsContent value="paypal" className="space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-all">
+                  <div className="flex items-center gap-4">
                     <img 
                       src="https://cdn.worldvectorlogo.com/logos/paypal-2.svg" 
                       alt="PayPal" 
-                      className="h-8 w-8 rounded bg-white p-1" 
+                      className="h-10 w-10 rounded bg-white p-1 shadow-sm" 
                     />
                     <div>
-                      <h3 className="font-medium">PayPal</h3>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">Accept PayPal payments</p>
+                      <h3 className="font-medium text-lg">PayPal</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Accept PayPal payments</p>
                     </div>
                   </div>
                   <Button 
                     onClick={() => handleConnectIntegration("payment", "PayPal")}
                     disabled={isConnecting}
+                    className="py-6 px-6 text-base"
                   >
                     {isConnecting ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                     ) : (
-                      <PlusCircle className="h-4 w-4 mr-2" />
+                      <PlusCircle className="h-5 w-5 mr-2" />
                     )}
                     Connect
                   </Button>
@@ -334,26 +343,27 @@ const Integrations = () => {
               </TabsContent>
               
               <TabsContent value="square" className="space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-all">
+                  <div className="flex items-center gap-4">
                     <img 
                       src="https://cdn.worldvectorlogo.com/logos/square-2.svg" 
                       alt="Square" 
-                      className="h-8 w-8 rounded bg-white p-1" 
+                      className="h-10 w-10 rounded bg-white p-1 shadow-sm" 
                     />
                     <div>
-                      <h3 className="font-medium">Square</h3>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">Process payments with Square</p>
+                      <h3 className="font-medium text-lg">Square</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Process payments with Square</p>
                     </div>
                   </div>
                   <Button 
                     onClick={() => handleConnectIntegration("payment", "Square")}
                     disabled={isConnecting}
+                    className="py-6 px-6 text-base"
                   >
                     {isConnecting ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                     ) : (
-                      <PlusCircle className="h-4 w-4 mr-2" />
+                      <PlusCircle className="h-5 w-5 mr-2" />
                     )}
                     Connect
                   </Button>
@@ -364,34 +374,36 @@ const Integrations = () => {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Webhook & API Integrations */}
-        <Card className="shadow-md hover:shadow-lg transition-shadow">
-          <CardHeader className="bg-gradient-to-r from-violet-50 to-violet-100 dark:from-violet-950/40 dark:to-violet-900/20 rounded-t-lg border-b border-violet-100 dark:border-violet-800">
+        <Card className="border-0 shadow-xl bg-white dark:bg-slate-900 overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-violet-50 to-violet-100 dark:from-violet-950/40 dark:to-violet-900/20 pb-8 border-b border-violet-100 dark:border-violet-800">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center">
-                  <Zap className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+              <div className="flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full bg-violet-100 dark:bg-violet-900/50 flex items-center justify-center shadow-md">
+                  <Zap className="h-6 w-6 text-violet-600 dark:text-violet-400" />
                 </div>
                 <div>
-                  <CardTitle>Webhooks & API</CardTitle>
-                  <CardDescription>Connect with Zapier, Make, and custom systems</CardDescription>
+                  <CardTitle className="text-2xl">Webhooks & API</CardTitle>
+                  <CardDescription className="text-base mt-1">Connect with Zapier, Make, and custom systems</CardDescription>
                 </div>
               </div>
             </div>
           </CardHeader>
-          <CardContent className="pt-6 space-y-6">
-            <div className="space-y-4">
-              <h3 className="font-medium">Zapier Integration</h3>
+          <CardContent className="pt-8 space-y-8">
+            <div className="space-y-5">
               <div className="flex items-center gap-3 mb-4">
                 <img 
                   src="https://cdn.worldvectorlogo.com/logos/zapier-1.svg" 
                   alt="Zapier" 
-                  className="h-8 w-8 rounded bg-white p-1" 
+                  className="h-10 w-10 rounded bg-white p-1 shadow-sm" 
                 />
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Connect Renewlytics to 5,000+ apps with Zapier
-                </p>
+                <div>
+                  <h3 className="font-medium text-lg">Zapier Integration</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
+                    Connect Renewlytics to 5,000+ apps with Zapier
+                  </p>
+                </div>
               </div>
               <div className="space-y-2">
                 <label htmlFor="zapier-webhook" className="text-sm font-medium">
@@ -402,6 +414,7 @@ const Integrations = () => {
                   placeholder="https://hooks.zapier.com/hooks/catch/..."
                   value={webhookUrl}
                   onChange={(e) => setWebhookUrl(e.target.value)}
+                  className="py-6 text-base"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -409,11 +422,12 @@ const Integrations = () => {
                   variant="outline" 
                   onClick={handleSaveWebhook}
                   disabled={isLoading}
+                  className="py-6 text-base"
                 >
                   {isLoading ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                   ) : (
-                    <LinkIcon className="h-4 w-4 mr-2" />
+                    <LinkIcon className="h-5 w-5 mr-2" />
                   )}
                   Save Webhook
                 </Button>
@@ -421,26 +435,27 @@ const Integrations = () => {
                   variant="default" 
                   onClick={handleTriggerZapier}
                   disabled={isLoading}
+                  className="py-6 text-base"
                 >
                   {isLoading ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                   ) : (
-                    <Zap className="h-4 w-4 mr-2" />
+                    <Zap className="h-5 w-5 mr-2" />
                   )}
                   Test Trigger
                 </Button>
               </div>
             </div>
             
-            <Separator />
+            <Separator className="my-8" />
             
             <div>
-              <h3 className="font-medium mb-4">API Access</h3>
-              <div className="p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+              <h3 className="font-medium text-lg mb-4">API Access</h3>
+              <div className="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-5">
                   Access the Renewlytics API to build custom integrations
                 </p>
-                <Button variant="outline">
+                <Button variant="outline" className="py-6 px-6 text-base">
                   View API Documentation
                 </Button>
               </div>
@@ -449,85 +464,87 @@ const Integrations = () => {
         </Card>
 
         {/* Marketing Integrations */}
-        <Card className="shadow-md hover:shadow-lg transition-shadow">
-          <CardHeader className="bg-gradient-to-r from-amber-50 to-amber-100 dark:from-amber-950/40 dark:to-amber-900/20 rounded-t-lg border-b border-amber-100 dark:border-amber-800">
+        <Card className="border-0 shadow-xl bg-white dark:bg-slate-900 overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-amber-50 to-amber-100 dark:from-amber-950/40 dark:to-amber-900/20 pb-8 border-b border-amber-100 dark:border-amber-800">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-amber-100 dark:bg-amber-900/50 flex items-center justify-center">
-                  <MessageSquare className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+              <div className="flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full bg-amber-100 dark:bg-amber-900/50 flex items-center justify-center shadow-md">
+                  <MessageSquare className="h-6 w-6 text-amber-600 dark:text-amber-400" />
                 </div>
                 <div>
-                  <CardTitle>Marketing Integrations</CardTitle>
-                  <CardDescription>Connect your email and marketing tools</CardDescription>
+                  <CardTitle className="text-2xl">Marketing Integrations</CardTitle>
+                  <CardDescription className="text-base mt-1">Connect your email and marketing tools</CardDescription>
                 </div>
               </div>
             </div>
           </CardHeader>
-          <CardContent className="pt-6 space-y-6">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-800">
-                <div className="flex items-center gap-3">
+          <CardContent className="pt-8 space-y-6">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-all">
+                <div className="flex items-center gap-4">
                   <img 
                     src="https://cdn.worldvectorlogo.com/logos/mailchimp-freddie-icon-1.svg" 
                     alt="Mailchimp" 
-                    className="h-8 w-8 rounded bg-white p-1" 
+                    className="h-10 w-10 rounded bg-white p-1 shadow-sm" 
                   />
                   <div>
-                    <h3 className="font-medium">Mailchimp</h3>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">Email marketing automation</p>
+                    <h3 className="font-medium text-lg">Mailchimp</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Email marketing automation</p>
                   </div>
                 </div>
                 <Button 
                   onClick={() => handleConnectIntegration("marketing", "Mailchimp")}
                   disabled={isConnecting}
+                  className="py-6 px-6 text-base"
                 >
                   {isConnecting ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                   ) : (
-                    <PlusCircle className="h-4 w-4 mr-2" />
+                    <PlusCircle className="h-5 w-5 mr-2" />
                   )}
                   Connect
                 </Button>
               </div>
               
-              <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-800">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-all">
+                <div className="flex items-center gap-4">
                   <img 
                     src="https://cdn.worldvectorlogo.com/logos/sendgrid-1.svg" 
                     alt="SendGrid" 
-                    className="h-8 w-8 rounded bg-white p-1" 
+                    className="h-10 w-10 rounded bg-white p-1 shadow-sm" 
                   />
                   <div>
-                    <h3 className="font-medium">SendGrid</h3>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">Transactional emails and campaigns</p>
+                    <h3 className="font-medium text-lg">SendGrid</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Transactional emails and campaigns</p>
                   </div>
                 </div>
-                <Badge variant="outline" className="bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                  <CheckCircle2 className="h-3 w-3 mr-1" />
+                <Badge variant="outline" className="bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400 py-1.5 px-3">
+                  <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
                   Connected
                 </Badge>
               </div>
               
-              <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-800">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:shadow-md transition-all">
+                <div className="flex items-center gap-4">
                   <img 
                     src="https://cdn.worldvectorlogo.com/logos/intercom-1.svg" 
                     alt="Intercom" 
-                    className="h-8 w-8 rounded bg-white p-1" 
+                    className="h-10 w-10 rounded bg-white p-1 shadow-sm" 
                   />
                   <div>
-                    <h3 className="font-medium">Intercom</h3>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">Customer messaging platform</p>
+                    <h3 className="font-medium text-lg">Intercom</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Customer messaging platform</p>
                   </div>
                 </div>
                 <Button 
                   onClick={() => handleConnectIntegration("marketing", "Intercom")}
                   disabled={isConnecting}
+                  className="py-6 px-6 text-base"
                 >
                   {isConnecting ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                   ) : (
-                    <PlusCircle className="h-4 w-4 mr-2" />
+                    <PlusCircle className="h-5 w-5 mr-2" />
                   )}
                   Connect
                 </Button>
@@ -535,6 +552,18 @@ const Integrations = () => {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Featured Partners Banner - Similar to Gainsight style */}
+      <div className="mt-16 text-center">
+        <h2 className="text-2xl font-bold mb-8">Trusted by Leading Business Tools</h2>
+        <div className="flex flex-wrap justify-center items-center gap-10 opacity-70 hover:opacity-100 transition-opacity py-6">
+          <img src="https://cdn.worldvectorlogo.com/logos/slack-new-logo.svg" alt="Slack" className="h-8 grayscale hover:grayscale-0 transition-all" />
+          <img src="https://cdn.worldvectorlogo.com/logos/google-2015.svg" alt="Google" className="h-8 grayscale hover:grayscale-0 transition-all" />
+          <img src="https://cdn.worldvectorlogo.com/logos/microsoft-5.svg" alt="Microsoft" className="h-8 grayscale hover:grayscale-0 transition-all" />
+          <img src="https://cdn.worldvectorlogo.com/logos/amazon-web-services-2.svg" alt="AWS" className="h-8 grayscale hover:grayscale-0 transition-all" />
+          <img src="https://cdn.worldvectorlogo.com/logos/salesforce-2.svg" alt="Salesforce" className="h-8 grayscale hover:grayscale-0 transition-all" />
+        </div>
       </div>
     </DashboardLayout>
   );
