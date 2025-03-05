@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, Moon, Sun, Laptop, Layout, Palette, CheckCircle2 } from 'lucide-react';
+import { X, Moon, Sun, Laptop, Layout, Palette, CheckCircle2, Settings } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
