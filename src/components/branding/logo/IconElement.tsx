@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Brain } from 'lucide-react';
+import { BrainCircuit } from 'lucide-react';
 
 interface IconElementProps {
   size: 'sm' | 'md' | 'lg';
@@ -24,14 +24,14 @@ export const IconElement: React.FC<IconElementProps> = ({
   return (
     <div 
       className={cn(
-        "relative flex items-center justify-center rounded-full bg-gradient-to-tr from-renewal-800 via-renewal-600 to-renewal-400 shadow-lg",
+        "relative flex items-center justify-center rounded-full bg-gradient-to-tr from-blue-700 via-teal-600 to-green-500 shadow-lg",
         sizeClasses[size],
         "aspect-square",
-        variant === 'default' && "hover:shadow-renewal-500/40",
+        variant === 'default' && "hover:shadow-teal-500/40",
         animated && "transition-transform hover:scale-110 duration-300"
       )}
     >
-      <Brain 
+      <BrainCircuit 
         className={cn(
           "text-white",
           size === 'sm' ? 'h-4 w-4' : size === 'md' ? 'h-5 w-5' : 'h-7 w-7',
