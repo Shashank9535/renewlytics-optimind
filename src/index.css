@@ -322,3 +322,54 @@
 .stat-label {
   @apply text-sm text-slate-500 dark:text-slate-400;
 }
+
+/* New landing page specific animations and styles */
+@keyframes neonPulse {
+  0% {
+    box-shadow: 0 0 5px rgba(76, 29, 149, 0.6), 0 0 10px rgba(76, 29, 149, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(76, 29, 149, 0.8), 0 0 40px rgba(76, 29, 149, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(76, 29, 149, 0.6), 0 0 10px rgba(76, 29, 149, 0.4);
+  }
+}
+
+.neon-glow {
+  animation: neonPulse 2s infinite;
+}
+
+.grainy-bg {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+}
+
+.glass-card {
+  @apply bg-opacity-10 backdrop-filter backdrop-blur-lg bg-gray-900 border border-gray-700/30 shadow-lg;
+}
+
+@keyframes floatingAnimation {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.floating {
+  animation: floatingAnimation 3s ease-in-out infinite;
+}
+
+.text-gradient-blue-purple {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500;
+}
+
+.bg-gradient-blue-purple {
+  @apply bg-gradient-to-r from-blue-600 to-purple-600;
+}
+
+.hero-pattern {
+  background-color: #111827;
+  background-image: radial-gradient(circle at 25px 25px, rgba(76, 29, 149, 0.15) 2%, transparent 0%), 
+                    radial-gradient(circle at 75px 75px, rgba(37, 99, 235, 0.15) 2%, transparent 0%);
+  background-size: 100px 100px;
+}
