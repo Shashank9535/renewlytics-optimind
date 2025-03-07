@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X, Bot, Send, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,6 +15,7 @@ export const LoginAssistant = ({ onClose, error }: LoginAssistantProps) => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const messageEndRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
     // If there was an authentication error, add a helpful message
@@ -23,16 +24,21 @@ export const LoginAssistant = ({ onClose, error }: LoginAssistantProps) => {
         text: `Looks like your credentials don't match. Need help? I'm here to guide you.`,
         isBot: true
       };
-      setMessages([...messages, errorResponse]);
+      setMessages(prev => [...prev, errorResponse]);
     }
   }, [error]);
+
+  useEffect(() => {
+    // Scroll to the bottom when messages change
+    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
     
     // Add user message
     const userMessage = { text: inputValue, isBot: false };
-    setMessages([...messages, userMessage]);
+    setMessages(prev => [...prev, userMessage]);
     
     // Clear input and show typing indicator
     setInputValue('');
@@ -46,11 +52,15 @@ export const LoginAssistant = ({ onClose, error }: LoginAssistantProps) => {
       if (lowerInput.includes('forgot') && lowerInput.includes('password')) {
         botResponse = "You can reset your password by clicking on the 'Forgot password?' link just above the sign-in button.";
       } else if (lowerInput.includes('sign up') || lowerInput.includes('register') || lowerInput.includes('create account')) {
-        botResponse = "You can create a new account by clicking on 'Create one' at the bottom of the login form.";
+        botResponse = "You can create a new account by clicking on the 'Sign Up' tab at the top of the form.";
       } else if (lowerInput.includes('google') || lowerInput.includes('social')) {
         botResponse = "You can sign in with Google by clicking the Google button below the login form.";
       } else if (lowerInput.includes('error') || lowerInput.includes('wrong') || lowerInput.includes('invalid')) {
         botResponse = "If you're experiencing login issues, double-check your email and password. For persistent problems, try resetting your password or contact support.";
+      } else if (lowerInput.includes('demo') || lowerInput.includes('trial')) {
+        botResponse = "Interested in trying Renewlytics? You can sign up for a free trial account by clicking the 'Sign Up' tab and creating an account.";
+      } else if (lowerInput.includes('help') || lowerInput.includes('support')) {
+        botResponse = "I'm here to help! You can ask me about login issues, account creation, or password recovery. For other assistance, please contact our support team at support@renewlytics.com.";
       } else {
         botResponse = "I can help with login issues, account creation, or password recovery. Please let me know what specific assistance you need.";
       }
@@ -121,6 +131,7 @@ export const LoginAssistant = ({ onClose, error }: LoginAssistantProps) => {
             </div>
           </div>
         )}
+        <div ref={messageEndRef} />
       </div>
       
       {/* Input */}
