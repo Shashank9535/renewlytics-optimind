@@ -14,6 +14,7 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import Automations from "./pages/Automations";
 import Integrations from "./pages/Integrations";
+import Landing from "./pages/Landing";
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
@@ -23,6 +24,8 @@ const queryClient = new QueryClient();
 // Initialize Supabase client with project ID
 const supabaseUrl = 'https://guqqljsjqxhxdklufgyg.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1cXFsanNqcXhoeGRrbHVmZ3lnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNTA1OTAsImV4cCI6MjAyMjgyNjU5MH0.OdYDnFbZ6D9ZMm-oMPtK1eA1LqvXYIg7LCKhk7m-lDc';
+
+// Create a single Supabase client instance to avoid duplicate instances
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const App = () => {
@@ -59,14 +62,13 @@ const App = () => {
           <Sonner />
           <BrowserRouter>
             <Routes>
-              <Route 
-                path="/" 
-                element={
-                  <ProtectedRoute>
-                    <Index />
-                  </ProtectedRoute>
-                } 
-              />
+              {/* Landing page as the default route */}
+              <Route path="/" element={<Landing />} />
+              
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/login" element={<Navigate to="/auth" />} />
+              
+              {/* Protected dashboard routes */}
               <Route 
                 path="/dashboard" 
                 element={
@@ -123,9 +125,7 @@ const App = () => {
                   </ProtectedRoute>
                 } 
               />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/login" element={<Navigate to="/auth" />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

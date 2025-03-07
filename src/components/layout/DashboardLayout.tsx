@@ -1,10 +1,13 @@
 
 import { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { Navigation } from './Navigation';
 import { cn } from '@/lib/utils';
 import { ThemeSettingsButton } from '../dashboard/ThemeSettingsButton';
 import { ThemeSettings } from '../dashboard/ThemeSettings';
 import { useTheme } from '@/contexts/ThemeContext';
+import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -20,6 +23,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     spacious: 'p-8'
   };
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    window.location.href = '/';
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex subtle-pattern">
       <Navigation />
@@ -28,7 +36,17 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           <div className="flex items-center">
             {/* This is where we could add page heading or breadcrumbs */}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            <Link to="/">
+              <Button variant="outline" size="sm">Home</Button>
+            </Link>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
             <ThemeSettingsButton />
           </div>
         </header>

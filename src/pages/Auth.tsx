@@ -1,13 +1,12 @@
-
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { AlertCircle, KeyRound, Mail, ArrowRight, Loader2, Brain, Fingerprint, HelpCircle, UserPlus, LockKeyhole } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from "@/integrations/supabase/client";
 import { RenewlyticsLogo } from '@/components/branding/RenewlyticsLogo';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { AnimatedDataPoints } from '@/components/auth/AnimatedDataPoints';
@@ -24,14 +23,17 @@ const Auth = () => {
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
   const navigate = useNavigate();
-
-  // Initialize Supabase client with project ID
-  const supabaseUrl = 'https://guqqljsjqxhxdklufgyg.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1cXFsanNqcXhoeGRrbHVmZ3lnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcyNTA1OTAsImV4cCI6MjAyMjgyNjU5MH0.OdYDnFbZ6D9ZMm-oMPtK1eA1LqvXYIg7LCKhk7m-lDc';
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const location = useLocation();
 
   useEffect(() => {
-    // Hide assistant by default
+    const searchParams = new URLSearchParams(location.search);
+    const tabParam = searchParams.get('tab');
+    if (tabParam === 'signup' || tabParam === 'login') {
+      setActiveTab(tabParam);
+    }
+  }, [location]);
+
+  useEffect(() => {
     if (authError) {
       setShowAssistant(true);
     }
@@ -54,7 +56,6 @@ const Auth = () => {
     
     try {
       if (activeTab === 'signup') {
-        // Sign up with Supabase
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -73,7 +74,6 @@ const Auth = () => {
           description: "Please check your email to verify your account."
         });
       } else {
-        // Sign in with Supabase
         const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
@@ -86,7 +86,7 @@ const Auth = () => {
           description: "Redirecting to dashboard..."
         });
         
-        navigate('/');
+        navigate('/dashboard');
       }
     } catch (error: any) {
       setAuthError(error.message || "Authentication failed");
@@ -104,6 +104,9 @@ const Auth = () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
+        options: {
+          redirectTo: window.location.origin + '/dashboard'
+        }
       });
       
       if (error) throw error;
@@ -125,17 +128,24 @@ const Auth = () => {
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
-    // Reset form fields when switching tabs
     setAuthError('');
   };
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 overflow-hidden">
-      {/* Animated data points background */}
       <AnimatedDataPoints />
       
       <div className="w-full max-w-md z-10">
         <div className="text-center mb-8">
+          <div className="flex justify-center mb-2">
+            <Button 
+              variant="ghost" 
+              className="text-white hover:bg-white/10"
+              onClick={() => navigate('/')}
+            >
+              &larr; Back to Home
+            </Button>
+          </div>
           <RenewlyticsLogo variant="with-tagline" size="lg" className="mx-auto mb-2" />
           <h2 className="mt-6 text-2xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 text-transparent bg-clip-text animate-pulse">
             Unlock AI-Powered Retention. Reduce Churn Effortlessly.
@@ -408,7 +418,6 @@ const Auth = () => {
           </CardFooter>
         </Card>
         
-        {/* Client logos */}
         <div className="mt-10 text-center">
           <p className="text-xs text-slate-500 mb-4">TRUSTED BY INNOVATIVE COMPANIES</p>
           <div className="flex flex-wrap justify-center items-center gap-6 opacity-70">
@@ -428,7 +437,6 @@ const Auth = () => {
         </div>
       </div>
       
-      {/* AI Assistant chatbot */}
       {showAssistant && (
         <LoginAssistant 
           onClose={() => setShowAssistant(false)} 
