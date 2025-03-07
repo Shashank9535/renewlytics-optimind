@@ -31,12 +31,13 @@ export function ActionableInsightsCard({ insights, className }: ActionableInsigh
   };
 
   return (
-    <div className={cn("rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800", className)}>
-      <div className="p-6 pb-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+    <div className={cn(className)}>
+      <div className="p-6 pb-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Lightbulb className="h-5 w-5 text-amber-500 dark:text-amber-400" />
-          <h3 className="font-medium">AI-Powered Insights</h3>
+          <h3 className="font-medium text-slate-900 dark:text-white">AI-Powered Insights</h3>
         </div>
+        <Button variant="ghost" size="sm" className="text-xs">Configure</Button>
       </div>
       <div className="p-4 space-y-4">
         {insights.map((insight) => (
@@ -57,7 +58,7 @@ export function ActionableInsightsCard({ insights, className }: ActionableInsigh
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="w-full justify-between group"
+                className="w-full justify-between group text-primary"
               >
                 <span>{insight.action}</span>
                 <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />

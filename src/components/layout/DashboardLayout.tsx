@@ -21,10 +21,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex subtle-pattern">
       <Navigation />
       <main className="flex-1 md:ml-64 min-h-screen flex flex-col">
-        <header className="flex justify-between items-center p-4 border-b border-slate-100 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm sticky top-0 z-10">
+        <header className="flex justify-between items-center px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm sticky top-0 z-10">
           <div className="flex items-center">
             {/* This is where we could add page heading or breadcrumbs */}
           </div>

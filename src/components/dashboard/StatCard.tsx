@@ -31,13 +31,13 @@ export function StatCard({
   const trendAbs = trend ? Math.abs(trend) : 0;
 
   return (
-    <div className={cn("rounded-xl bg-white dark:bg-slate-900 p-6 shadow-sm border border-slate-100 dark:border-slate-800 soft-shadow", className)}>
-      <div className="flex justify-between items-start mb-2">
+    <div className={cn("p-6", className)}>
+      <div className="flex justify-between items-start mb-3">
         <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400">{title}</h3>
         {Icon && <Icon className="w-5 h-5 text-slate-400 dark:text-slate-500" />}
       </div>
       
-      <div className="mt-2 flex flex-col">
+      <div className="mt-1">
         <div className={cn("text-2xl font-bold", valueClassName)}>
           {value}
         </div>
@@ -74,7 +74,7 @@ export function StatCard({
         )}
       </div>
       
-      {children && <div className="mt-4">{children}</div>}
+      {children && <div className="mt-3">{children}</div>}
     </div>
   );
 }

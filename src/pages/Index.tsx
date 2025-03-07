@@ -8,7 +8,19 @@ import { SegmentDistributionChart } from '@/components/dashboard/SegmentDistribu
 import { AtRiskCustomersTable } from '@/components/dashboard/AtRiskCustomersTable';
 import { UploadCsvCard } from '@/components/dashboard/UploadCsvCard';
 import { ActionableInsightsCard } from '@/components/dashboard/ActionableInsightsCard';
-import { BadgeCheck, Users, AlertTriangle, Zap, Brain, Target, Activity } from 'lucide-react';
+import { 
+  BadgeCheck, 
+  Users, 
+  AlertTriangle, 
+  Zap, 
+  Brain, 
+  Target, 
+  Activity,
+  Gauge,
+  LineChart,
+  TrendingUp
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Index = () => {
   // Sample data for charts and tables
@@ -107,22 +119,36 @@ const Index = () => {
 
   return (
     <DashboardLayout>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-renewal-700 to-renewal-500 text-transparent bg-clip-text">Dashboard</h1>
-        <p className="text-slate-600 dark:text-slate-400 mt-2">
-          Overview of your customer retention metrics and AI-powered insights
-        </p>
+      <div className="mb-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="enterprise-heading">Customer Retention Dashboard</h1>
+            <p className="text-slate-600 dark:text-slate-400 mt-2">
+              AI-powered insights to help you reduce churn and increase retention
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <Button variant="outline" className="gap-2">
+              <LineChart className="h-4 w-4" />
+              Reports
+            </Button>
+            <Button className="gap-2">
+              <TrendingUp className="h-4 w-4" />
+              Take Action
+            </Button>
+          </div>
+        </div>
       </div>
 
       {/* Stats overview */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-up" style={{ animationDelay: '100ms' }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
           title="Total Customers"
           value="820"
           icon={Users}
           trend={5.2}
           trendLabel="vs last month"
-          className="glass-card hover:shadow-xl transition-all transform hover:-translate-y-1"
+          className="enterprise-card"
         />
         <StatCard
           title="Retention Rate"
@@ -130,12 +156,12 @@ const Index = () => {
           icon={BadgeCheck}
           trend={-2.1}
           trendLabel="vs last month"
-          valueClassName="text-renewal-600 dark:text-renewal-500"
-          className="glass-card hover:shadow-xl transition-all transform hover:-translate-y-1"
+          valueClassName="text-primary"
+          className="enterprise-card"
         >
           <CustomerRetentionChart 
             data={retentionData.slice(-5)} 
-            className="h-16 mt-2" 
+            className="h-14 mt-2" 
           />
         </StatCard>
         <StatCard
@@ -145,7 +171,7 @@ const Index = () => {
           trend={12.8}
           trendLabel="vs last month"
           valueClassName="text-amber-600 dark:text-amber-500"
-          className="glass-card hover:shadow-xl transition-all transform hover:-translate-y-1"
+          className="enterprise-card"
         />
         <StatCard
           title="Churn Rate"
@@ -154,18 +180,21 @@ const Index = () => {
           trend={-0.8}
           trendLabel="vs last month"
           valueClassName="text-emerald-600 dark:text-emerald-500"
-          className="glass-card hover:shadow-xl transition-all transform hover:-translate-y-1"
+          className="enterprise-card"
         />
       </div>
 
       {/* Main content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-up" style={{ animationDelay: '200ms' }}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* First column */}
         <div className="space-y-8">
-          <div className="rounded-xl bg-white dark:bg-slate-900/80 shadow-lg border border-slate-100/50 dark:border-slate-800/50 p-6 backdrop-blur-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <Activity className="h-5 w-5 text-renewal-500" />
-              <h3 className="font-medium">Churn Risk Distribution</h3>
+          <div className="enterprise-card p-6">
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-2">
+                <Gauge className="h-5 w-5 text-primary" />
+                <h3 className="font-medium text-slate-900 dark:text-white">Churn Risk Distribution</h3>
+              </div>
+              <Button variant="ghost" size="sm" className="text-xs">View All</Button>
             </div>
             <ChurnRiskChart data={churnRiskData} />
             <div className="grid grid-cols-3 gap-2 mt-6">
@@ -181,22 +210,28 @@ const Index = () => {
               ))}
             </div>
           </div>
-          <UploadCsvCard className="transform transition-all hover:shadow-xl hover:-translate-y-1" />
+          <UploadCsvCard className="enterprise-card" />
         </div>
 
         {/* Second column */}
         <div className="space-y-8">
-          <div className="rounded-xl bg-white dark:bg-slate-900/80 shadow-lg border border-slate-100/50 dark:border-slate-800/50 p-6 backdrop-blur-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <Target className="h-5 w-5 text-renewal-500" />
-              <h3 className="font-medium">Customer Retention Trend</h3>
+          <div className="enterprise-card p-6">
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-2">
+                <Target className="h-5 w-5 text-primary" />
+                <h3 className="font-medium text-slate-900 dark:text-white">Customer Retention Trend</h3>
+              </div>
+              <Button variant="ghost" size="sm" className="text-xs">Last 90 Days</Button>
             </div>
             <CustomerRetentionChart data={retentionData} />
           </div>
-          <div className="rounded-xl bg-white dark:bg-slate-900/80 shadow-lg border border-slate-100/50 dark:border-slate-800/50 p-6 backdrop-blur-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <Users className="h-5 w-5 text-renewal-500" />
-              <h3 className="font-medium">Customer Segments</h3>
+          <div className="enterprise-card p-6">
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-primary" />
+                <h3 className="font-medium text-slate-900 dark:text-white">Customer Segments</h3>
+              </div>
+              <Button variant="ghost" size="sm" className="text-xs">View Details</Button>
             </div>
             <SegmentDistributionChart data={segmentData} />
           </div>
@@ -204,31 +239,75 @@ const Index = () => {
 
         {/* Third column */}
         <div className="space-y-8">
-          <div className="rounded-xl bg-white dark:bg-slate-900/80 shadow-lg border border-slate-100/50 dark:border-slate-800/50 p-6 text-center backdrop-blur-sm">
+          <div className="enterprise-card p-6 text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Brain className="h-5 w-5 text-renewal-500" />
-              <h3 className="font-medium">Prediction Accuracy</h3>
+              <Brain className="h-5 w-5 text-primary" />
+              <h3 className="font-medium text-slate-900 dark:text-white">AI Prediction Accuracy</h3>
             </div>
             <div className="flex justify-center mb-4">
               <CircularProgress 
                 value={92} 
                 label="Accuracy" 
-                color="stroke-renewal-500" 
-                size={140} 
+                color="stroke-primary" 
+                size={120} 
                 className="transform transition-all hover:scale-105"
               />
             </div>
             <p className="text-sm text-slate-600 dark:text-slate-400">
               Based on historical churn predictions vs. actual results
             </p>
+            <Button variant="outline" size="sm" className="mt-4 w-full">View Prediction History</Button>
           </div>
-          <ActionableInsightsCard insights={insights} className="transform transition-all hover:shadow-xl hover:-translate-y-1" />
+          <ActionableInsightsCard insights={insights} className="enterprise-card" />
         </div>
       </div>
 
       {/* At-risk customers table */}
-      <div className="mt-8 animate-fade-up" style={{ animationDelay: '300ms' }}>
-        <AtRiskCustomersTable customers={atRiskCustomers} className="backdrop-blur-sm" />
+      <div className="mt-8">
+        <AtRiskCustomersTable customers={atRiskCustomers} className="enterprise-card" />
+      </div>
+      
+      {/* Success stories section */}
+      <div className="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Customer Success Stories</h2>
+          <Button variant="outline" size="sm">View All</Button>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="feature-card">
+            <div className="feature-icon">
+              <TrendingUp className="h-6 w-6" />
+            </div>
+            <h3 className="text-lg font-medium mb-2">Acme Corp</h3>
+            <p className="text-slate-600 dark:text-slate-400 mb-4 flex-1">
+              Reduced churn by 63% in just 3 months using Renewlytics predictive analytics.
+            </p>
+            <Button variant="link" className="p-0 h-auto justify-start text-primary">Read Case Study →</Button>
+          </div>
+          
+          <div className="feature-card">
+            <div className="feature-icon">
+              <Users className="h-6 w-6" />
+            </div>
+            <h3 className="text-lg font-medium mb-2">TechGiant Inc</h3>
+            <p className="text-slate-600 dark:text-slate-400 mb-4 flex-1">
+              Improved customer lifetime value by 47% with automated retention campaigns.
+            </p>
+            <Button variant="link" className="p-0 h-auto justify-start text-primary">Read Case Study →</Button>
+          </div>
+          
+          <div className="feature-card">
+            <div className="feature-icon">
+              <Activity className="h-6 w-6" />
+            </div>
+            <h3 className="text-lg font-medium mb-2">StartupHQ</h3>
+            <p className="text-slate-600 dark:text-slate-400 mb-4 flex-1">
+              Saved $250K in annual revenue by identifying high-risk customers early.
+            </p>
+            <Button variant="link" className="p-0 h-auto justify-start text-primary">Read Case Study →</Button>
+          </div>
+        </div>
       </div>
     </DashboardLayout>
   );
