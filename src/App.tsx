@@ -39,6 +39,9 @@ const App = () => {
               <Route path="/automations" element={<Automations />} />
               <Route path="/integrations" element={<Integrations />} />
               
+              {/* Redirect /auth route to dashboard */}
+              <Route path="/auth" element={<Navigate to="/dashboard" replace />} />
+              
               {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />
             </Routes>
