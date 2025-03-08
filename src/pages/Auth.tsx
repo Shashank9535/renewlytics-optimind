@@ -5,11 +5,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Mail, KeyRound, Loader2, ArrowRight } from 'lucide-react';
+import { Mail, KeyRound, Loader2, ArrowRight, AlertTriangle } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from "@/integrations/supabase/client";
 import { RenewlyticsLogo } from '@/components/branding/RenewlyticsLogo';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -17,6 +18,7 @@ const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('login');
+  const [authError, setAuthError] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -53,6 +55,7 @@ const Auth = () => {
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+    setAuthError(null);
     
     if (!email || !password) {
       toast({
@@ -94,6 +97,7 @@ const Auth = () => {
         navigate('/dashboard');
       }
     } catch (error: any) {
+      setAuthError(error.message || "Authentication failed");
       toast({
         variant: "destructive",
         title: "Authentication failed",
@@ -106,6 +110,7 @@ const Auth = () => {
 
   const handleSocialAuth = async (provider: 'google') => {
     try {
+      setAuthError(null);
       setGoogleLoading(true);
       
       console.log('Attempting to sign in with Google...');
@@ -113,22 +118,27 @@ const Auth = () => {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/dashboard`
+          redirectTo: window.location.origin + '/dashboard'
         }
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error('Google auth error:', error);
+        throw error;
+      }
       
       console.log('SignInWithOAuth response:', data);
       
       // No need to navigate here as the onAuthStateChange handler will do that
     } catch (error: any) {
       console.error('Google auth error:', error);
+      setAuthError(error.message || "Unable to authenticate with Google");
       toast({
         variant: "destructive",
         title: "Social login failed",
         description: error.message || "Unable to authenticate with Google. Please try again."
       });
+    } finally {
       setGoogleLoading(false);
     }
   };
@@ -160,6 +170,19 @@ const Auth = () => {
                 : 'Enter your details to create a new account'}
             </CardDescription>
           </CardHeader>
+          
+          {authError && (
+            <div className="px-6">
+              <Alert variant="destructive" className="bg-red-900/30 border-red-800 text-red-200">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription className="ml-2">
+                  {authError === "provider is not enabled" 
+                    ? "Google login is not enabled. Please contact the administrator."
+                    : authError}
+                </AlertDescription>
+              </Alert>
+            </div>
+          )}
           
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid grid-cols-2 mx-6 bg-slate-700">
