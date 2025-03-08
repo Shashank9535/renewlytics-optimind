@@ -90,13 +90,13 @@ const Landing = () => {
             <div className="flex items-center space-x-4">
               <Button 
                 variant="outline" 
-                onClick={() => navigate('/auth')}
+                onClick={() => navigate('/dashboard')}
                 className="hidden sm:flex border-purple-500 text-purple-400 hover:bg-purple-500/10"
               >
                 Login
               </Button>
               <Button 
-                onClick={() => navigate('/auth?tab=signup')}
+                onClick={() => navigate('/dashboard')}
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-purple-500/20"
               >
                 Get Started
@@ -553,7 +553,7 @@ const Landing = () => {
                       ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700' 
                       : 'bg-gray-700 hover:bg-gray-600'
                   }`}
-                  onClick={() => navigate('/auth?tab=signup')}
+                  onClick={() => navigate('/dashboard')}
                 >
                   {plan.name === "Enterprise" ? "Contact Sales" : "Get Started"}
                 </Button>
@@ -585,7 +585,7 @@ const Landing = () => {
               variant="outline" 
               size="lg"
               className="border-white text-white hover:bg-white/10"
-              onClick={() => navigate('/auth?tab=signup')}
+              onClick={() => navigate('/dashboard')}
             >
               Try for Free
             </Button>
