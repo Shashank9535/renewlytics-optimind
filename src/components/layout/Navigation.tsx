@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -20,7 +19,8 @@ import {
   Brain,
   HelpCircle,
   Settings,
-  Bell
+  Bell,
+  MessageSquare
 } from 'lucide-react';
 
 type Link = {
@@ -56,6 +56,12 @@ export function Navigation() {
       name: 'Segments',
       href: '/segments',
       icon: <Pipette className="h-5 w-5" />,
+    },
+    {
+      name: 'Chat',
+      href: '/chat',
+      icon: <MessageSquare className="h-5 w-5" />,
+      badge: 'ai',
     },
     {
       name: 'Automations',
@@ -111,7 +117,7 @@ export function Navigation() {
       )}
     </Link>
   ));
-
+  
   return (
     <>
       {isMobile && (
