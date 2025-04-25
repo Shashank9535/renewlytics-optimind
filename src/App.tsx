@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import Automations from "./pages/Automations";
 import Integrations from "./pages/Integrations";
 import Landing from "./pages/Landing";
+import Chat from "./pages/Chat";
 
 // Create a QueryClient instance
 const queryClient = new QueryClient();
@@ -38,6 +38,7 @@ const App = () => {
               <Route path="/import" element={<Import />} />
               <Route path="/automations" element={<Automations />} />
               <Route path="/integrations" element={<Integrations />} />
+              <Route path="/chat" element={<Chat />} />
               
               {/* Redirect /auth route to dashboard */}
               <Route path="/auth" element={<Navigate to="/dashboard" replace />} />
